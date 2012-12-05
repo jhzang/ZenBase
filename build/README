@@ -1,0 +1,5 @@
+out-of-source building directory
+
+cmake ..
+or 
+cmake -DCMAKE_BUILD_TYPE=Debug ..
