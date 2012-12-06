@@ -2,7 +2,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
-set(SRCS atomic.cpp byteorder.cpp random.cpp appconfig.cpp clock.cpp datetime.cpp utility.cpp octets.cpp octetstream.cpp)
+set(SRCS atomic.cpp byteorder.cpp random.cpp appconfig.cpp clock.cpp datetime.cpp utility.cpp octets.cpp octetstream.cpp time_helper.cpp)
 
 add_library(zbase_shared SHARED ${SRCS})
 set_target_properties(zbase_shared PROPERTIES OUTPUT_NAME zbase VERSION 1.0 SOVERSION 1)
