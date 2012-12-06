@@ -124,7 +124,15 @@ namespace zbase
 			 * @details Forbid external use
 			 */
 			~Rep();
+			/**
+			 * @brief Copy constructor
+			 * @details Forbid external use
+			 */
 			Rep(const Rep& r) {}
+			/**
+			 * @brief Operator =
+			 * @details Forbid external use
+			 */
 			Rep& operator = (const Rep& rhs) { return *this; }
 
 		private:
@@ -173,38 +181,106 @@ namespace zbase
 		 */
 		Octets& operator = (const Octets& rhs);
 
-		// member accessors
-		// ATTENTION: The following accessors are for readonly access. 
-		//            External change through these accessors will violate reference count of Rep and is forbidden.
+		/**
+		 * @adddtogroup Member accessors
+		 * {@
+		 */
+
+		/**
+		 * @brief Get intrnal data buffer
+		 * @details ATTENTION: The following accessors are for readonly access. 
+		 *          External change through these accessors will violate reference count of Rep and is forbidden.
+		 */
 		const void* GetData() const { return NULL == m_rep ? NULL : m_rep->GetData(); } 
+		/**
+		 * @brief Get data size
+		 */
 		size_t GetSize() const { return NULL == m_rep ? 0 : m_rep->GetSize(); }
+		/**
+		 * @brief Check if it is empty
+		 */
 		bool IsEmpty() const { return NULL == m_rep || m_rep->GetSize() == 0; }
+		/**
+		 * @brief Compare with another Octets object
+		 * @param [in] rhs: Another Octets object to compare
+		 * @return -1 for less; 0 for equal; 1 for greater
+		 */
 		int Compare(const Octets& rhs) const;
 
-		// member modifier
+		/** @} */
+
+		/**
+		 * @addtogroup Member modifiers
+		 * {@
+		 */
+
+		/**
+		 * @brief Assign content
+		 */
 		Octets& Assign(const void *data, size_t size);
+		/**
+		 * @brief Append to the existing data
+		 */
 		Octets& Append(const void *data, size_t size);
+		/**
+		 * @brief Append to the existing data
+		 */
 		Octets& Append(const Octets& o);
+		/**
+		 * @brief Swap data of two Octets ojbects
+		 */
 		void Swap(Octets& rhs);
+		/**
+		 * @brief Clear the object to be empty
+		 */
 		void Clear();
+		/**
+		 * @brief Get string description in hex format
+		 */
 		std::string Hex() { return NULL == m_rep ? "" : m_rep->Hex(); }
 
-		// operator override
+		/** @} */
+
+		/**
+		 * @addtogroup Operators
+		 * {@
+		 */
+		/** @brief Operator += */
 		Octets& operator += (const Octets& rhs) { return Append(rhs.GetData(), rhs.GetSize()); }
+		/** @brief Operator == */
 		bool operator == (const Octets& rhs) { return GetSize() == rhs.GetSize() && Compare(rhs) == 0; }
+		/** @brief Operator != */
 		bool operator != (const Octets& rhs) { return GetSize() != rhs.GetSize() || Compare(rhs) != 0; }
+		/** @brief Operator > */
 		bool operator > (const Octets& rhs) { return Compare(rhs) > 0; }
+		/** @brief Operator >= */
 		bool operator >= (const Octets& rhs) { return Compare(rhs) >= 0; }
+		/** @brief Operator < */
 		bool operator < (const Octets& rhs) { return Compare(rhs) < 0; }
+		/** @brief Operator <= */
 		bool operator <= (const Octets& rhs) { return Compare(rhs) <= 0; }
 
+		/** @} */
+
 	private:
+		/**
+		 * @brief Internal data holder
+		 */
 		Rep *m_rep;
 	};
 
+	/**
+	 * @brief Operator +
+	 */
 	Octets operator + (const Octets& a, const Octets& b);
 
+	/**
+	 * @brief Output a Octets object to a ostringstream object
+	 */
 	std::ostringstream& operator << (std::ostringstream& oss, const Octets& data);
+	/**
+	 * @brief Output a Octets object to a ostream object
+	 */
 	std::ostream& operator << (std::ostream& oss, const Octets& data);
 
 } // namespace zbase
